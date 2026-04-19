@@ -1,145 +1,71 @@
-{
-  "Version": "2012-10-17",
-  "Statement": [
     {
-      "Sid": "TerraformReadIdentity",
-      "Effect": "Allow",
-      "Action": [
-        "sts:GetCallerIdentity"
-      ],
-      "Resource": "*"
-    },
-    {
-      "Sid": "ECSManagement",
-      "Effect": "Allow",
-      "Action": [
-        "ecs:CreateCluster",
-        "ecs:DeleteCluster",
-        "ecs:DescribeClusters",
-        "ecs:RegisterTaskDefinition",
-        "ecs:DeregisterTaskDefinition",
-        "ecs:DescribeTaskDefinition",
-        "ecs:ListTaskDefinitions",
-        "ecs:CreateService",
-        "ecs:UpdateService",
-        "ecs:DeleteService",
-        "ecs:DescribeServices",
-        "ecs:ListServices",
-        "ecs:ListTasks",
-        "ecs:DescribeTasks"
-      ],
-      "Resource": "*"
-    },
-    {
-      "Sid": "ECRManagementAndPushPull",
-      "Effect": "Allow",
-      "Action": [
-        "ecr:GetAuthorizationToken",
-        "ecr:CreateRepository",
-        "ecr:DeleteRepository",
-        "ecr:DescribeRepositories",
-        "ecr:ListImages",
-        "ecr:BatchCheckLayerAvailability",
-        "ecr:InitiateLayerUpload",
-        "ecr:UploadLayerPart",
-        "ecr:CompleteLayerUpload",
-        "ecr:PutImage",
-        "ecr:BatchGetImage"
-      ],
-      "Resource": "*"
-    },
-    {
-      "Sid": "RDSManagement",
-      "Effect": "Allow",
-      "Action": [
-        "rds:CreateDBInstance",
-        "rds:ModifyDBInstance",
-        "rds:DeleteDBInstance",
-        "rds:DescribeDBInstances",
-        "rds:CreateDBSubnetGroup",
-        "rds:ModifyDBSubnetGroup",
-        "rds:DeleteDBSubnetGroup",
-        "rds:DescribeDBSubnetGroups",
-        "rds:AddTagsToResource",
-        "rds:RemoveTagsFromResource"
-      ],
-      "Resource": "*"
-    },
-    {
-      "Sid": "ALBManagement",
-      "Effect": "Allow",
-      "Action": [
-        "elasticloadbalancing:CreateLoadBalancer",
-        "elasticloadbalancing:DeleteLoadBalancer",
-        "elasticloadbalancing:DescribeLoadBalancers",
-        "elasticloadbalancing:CreateTargetGroup",
-        "elasticloadbalancing:DeleteTargetGroup",
-        "elasticloadbalancing:DescribeTargetGroups",
-        "elasticloadbalancing:CreateListener",
-        "elasticloadbalancing:DeleteListener",
-        "elasticloadbalancing:ModifyListener",
-        "elasticloadbalancing:DescribeListeners",
-        "elasticloadbalancing:AddTags",
-        "elasticloadbalancing:RemoveTags"
-      ],
-      "Resource": "*"
-    },
-    {
-      "Sid": "EC2NetworkingAndSecurityGroups",
-      "Effect": "Allow",
-      "Action": [
-        "ec2:DescribeVpcs",
-        "ec2:DescribeSubnets",
-        "ec2:DescribeSecurityGroups",
-        "ec2:CreateSecurityGroup",
-        "ec2:DeleteSecurityGroup",
-        "ec2:AuthorizeSecurityGroupIngress",
-        "ec2:AuthorizeSecurityGroupEgress",
-        "ec2:RevokeSecurityGroupIngress",
-        "ec2:RevokeSecurityGroupEgress",
-        "ec2:CreateTags",
-        "ec2:DeleteTags"
-      ],
-      "Resource": "*"
-    },
-    {
-      "Sid": "CloudWatchLogsManagement",
-      "Effect": "Allow",
-      "Action": [
-        "logs:CreateLogGroup",
-        "logs:DeleteLogGroup",
-        "logs:PutRetentionPolicy",
-        "logs:DescribeLogGroups",
-        "logs:CreateLogStream",
-        "logs:PutLogEvents"
-      ],
-      "Resource": "*"
-    },
-    {
-      "Sid": "IAMRoleManagementForECSExecution",
-      "Effect": "Allow",
-      "Action": [
-        "iam:CreateRole",
-        "iam:DeleteRole",
-        "iam:GetRole",
-        "iam:AttachRolePolicy",
-        "iam:DetachRolePolicy",
-        "iam:CreateServiceLinkedRole"
-      ],
-      "Resource": "*"
-    },
-    {
-      "Sid": "PassRoleToECSTasksOnly",
-      "Effect": "Allow",
-      "Action": [
-        "iam:PassRole"
-      ],
-      "Resource": "*",
-      "Condition": {
-        "StringEquals": {
-          "iam:PassedToService": "ecs-tasks.amazonaws.com"
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Sid": "ECSFullAccess",
+          "Effect": "Allow",
+          "Action": "ecs:*",
+          "Resource": "*"
+        },
+        {
+          "Sid": "ECRFullAccess",
+          "Effect": "Allow",
+          "Action": "ecr:*",
+          "Resource": "*"
+        },
+        {
+          "Sid": "RDSFullAccess",
+          "Effect": "Allow",
+          "Action": "rds:*",
+          "Resource": "*"
+        },
+        {
+          "Sid": "EC2AndVpcFullAccess",
+          "Effect": "Allow",
+          "Action": "ec2:*",
+          "Resource": "*"
+        },
+        {
+          "Sid": "CloudWatchLogsFullAccess",
+          "Effect": "Allow",
+          "Action": "logs:*",
+          "Resource": "*"
+        },
+        {
+          "Sid": "ELBv2FullAccess",
+          "Effect": "Allow",
+          "Action": "elasticloadbalancing:*",
+          "Resource": "*"
+        },
+        {
+          "Sid": "IamMinimumForTerraformEcs",
+          "Effect": "Allow",
+          "Action": [
+            "iam:CreateRole",
+            "iam:DeleteRole",
+            "iam:GetRole",
+            "iam:GetPolicy",
+            "iam:GetPolicyVersion",
+            "iam:AttachRolePolicy",
+            "iam:DetachRolePolicy",
+            "iam:CreateServiceLinkedRole",
+            "iam:SimulatePrincipalPolicy",
+            "iam:ListAttachedRolePolicies",
+            "iam:ListRolePolicies",
+            "iam:ListRoles"
+          ],
+          "Resource": "*"
+        },
+        {
+          "Sid": "IamPassRoleToEcsTasksOnly",
+          "Effect": "Allow",
+          "Action": "iam:PassRole",
+          "Resource": "*",
+          "Condition": {
+            "StringEquals": {
+              "iam:PassedToService": "ecs-tasks.amazonaws.com"
+            }
+          }
         }
-      }
+      ]
     }
-  ]
-}

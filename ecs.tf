@@ -4,20 +4,39 @@ resource "aws_ecr_repository" "app_repo" {
   force_delete         = true # Useful for testing
 }
 
+locals {
+  backend_dir = abspath("${path.module}/../SignLanguageGame_Backend")
+  dockerfile  = abspath("${path.module}/../SignLanguageGame_Backend/dockerfile")
+}
+
 resource "null_resource" "docker_packaging" {
   # This ensures the build runs only when your code actually changes
   triggers = {
-    src_hash = sha1(join("", [for f in fileset("${path.module}/../Backend", "**") : filesha1("${path.module}/../Backend/${f}")]))
+    src_hash = sha1(join("", [for f in fileset("${path.module}/../SignLanguageGame_Backend", "**") : filesha1("${path.module}/../SignLanguageGame_Backend/${f}")]))
   }
 
   provisioner "local-exec" {
+    interpreter = ["/bin/bash", "-c"]
     command = <<EOF
+      set -euo pipefail
+
+      if [ ! -d "${local.backend_dir}" ]; then
+        echo "ERROR: Backend directory not found at ${local.backend_dir}" >&2
+        echo "Expected sibling folder: ../SignLanguageGame_Backend" >&2
+        exit 1
+      fi
+
+      if [ ! -f "${local.dockerfile}" ]; then
+        echo "ERROR: Dockerfile not found at ${local.dockerfile}" >&2
+        exit 1
+      fi
+
       # 1. Login to ECR
       aws ecr get-login-password --region ${var.aws_region} | docker login --username AWS --password-stdin ${aws_ecr_repository.app_repo.repository_url}
       
       # 2. Build the image
-      docker build -t ${aws_ecr_repository.app_repo.repository_url}:latest -f ${path.module}/../Backend/dockerfile ${path.module}/../Backend
-      
+      docker build -t ${aws_ecr_repository.app_repo.repository_url}:latest -f "${local.dockerfile}" "${local.backend_dir}"
+
       # 3. Push to ECR
       docker push ${aws_ecr_repository.app_repo.repository_url}:latest
     EOF

@@ -29,7 +29,6 @@ resource "aws_db_instance" "database" {
   identifier           = "leaderboard-db"
   allocated_storage    = 20
   engine               = "postgres"
-  engine_version       = "16.2"
   instance_class       = "db.t3.micro" # Smallest/Cheapest for testing
   
   db_name              = "leaderboard"
