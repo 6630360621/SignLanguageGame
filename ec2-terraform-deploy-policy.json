@@ -52,7 +52,8 @@
             "iam:SimulatePrincipalPolicy",
             "iam:ListAttachedRolePolicies",
             "iam:ListRolePolicies",
-            "iam:ListRoles"
+            "iam:ListRoles",
+            "iam:ListInstanceProfilesForRole"
           ],
           "Resource": "*"
         },
