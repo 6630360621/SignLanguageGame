@@ -18,7 +18,7 @@ resource "aws_cognito_user_pool" "frontend_users" {
 }
 
 resource "aws_cognito_user_pool_client" "frontend_app" {
-  name         = "${var.project_name}-frontend-client"
+  name         = "${var.amplify_project_name}-frontend-client"
   user_pool_id = aws_cognito_user_pool.frontend_users.id
 
   generate_secret                      = false

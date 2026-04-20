@@ -13,24 +13,28 @@ variable "db_password" {
 variable "image_uri" {
   description = "Full container image URI to deploy"
   type        = string
-  variable "amplify_app_name" {
-    description = "AWS Amplify app name for the frontend"
-
-    default     = "deaf-lingo-frontend"
+}
+variable "amplify_app_name" {
+  description = "AWS Amplify app name for the frontend"
+  default     = "deaf-lingo-frontend"
+}
+variable "amplify_project_name" {
   description = "Project name prefix for AWS resources"
   type        = string
-  variable "amplify_repository" {
-    description = "Git repository URL for Amplify hosting"
-
+}
+variable "amplify_repository" {
+  description = "Git repository URL for Amplify hosting"
+  type        = string
+}
+variable "amplify_instance_type" {
   description = "EC2 instance type for frontend hosting"
   type        = string
-  variable "amplify_access_token" {
-    description = "GitHub personal access token for Amplify to access the repository"
-
-    sensitive   = true
-  }
-
-  variable "amplify_branch_name" {
+}
+variable "amplify_access_token" {
+  description = "GitHub personal access token for Amplify to access the repository"
+  sensitive   = true
+}
+variable "amplify_branch_name" {
     description = "Git branch Amplify should deploy"
     type        = string
     default     = "main"
@@ -40,6 +44,8 @@ variable "image_uri" {
     description = "Monorepo path to the frontend app root"
     type        = string
     default     = "Cloud-Sign-language/frontend"
+  }
+
 variable "frontend_existing_key_name" {
   description = "Existing EC2 key pair name for SSH. Leave empty to skip key pair attachment unless frontend_ssh_public_key is provided"
   type        = bool
