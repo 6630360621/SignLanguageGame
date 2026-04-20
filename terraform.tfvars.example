@@ -2,4 +2,19 @@
 
 aws_region  = "us-east-1"
 db_password = "ChangeMe123!"
-image_uri   = "699938055022.dkr.ecr.us-east-1.amazonaws.com/my-leaderboard-backend:latest"
+image_uri   = "the link"
+
+project_name = "deaf-lingo"
+
+# Frontend EC2
+frontend_instance_type    = "t3.micro"
+frontend_enable_ssh       = false
+frontend_ssh_cidr         = "YOUR.PUBLIC.IP.ADDRESS/32"
+frontend_existing_key_name = ""
+frontend_ssh_public_key    = ""
+
+# Cognito
+cognito_user_pool_name = "deaf-lingo-users"
+cognito_domain_prefix  = "deaf-lingo-auth-unique-prefix"
+cognito_callback_urls  = ["http://localhost:5173"]
+cognito_logout_urls    = ["http://localhost:5173"]

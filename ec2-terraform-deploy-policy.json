@@ -2,6 +2,12 @@
       "Version": "2012-10-17",
       "Statement": [
         {
+          "Sid": "CognitoFullAccess",
+          "Effect": "Allow",
+          "Action": "cognito-idp:*",
+          "Resource": "*"
+        },
+        {
           "Sid": "ECSFullAccess",
           "Effect": "Allow",
           "Action": "ecs:*",
@@ -53,7 +59,13 @@
             "iam:ListAttachedRolePolicies",
             "iam:ListRolePolicies",
             "iam:ListRoles",
-            "iam:ListInstanceProfilesForRole"
+            "iam:ListInstanceProfilesForRole",
+            "iam:CreateInstanceProfile",
+            "iam:DeleteInstanceProfile",
+            "iam:GetInstanceProfile",
+            "iam:AddRoleToInstanceProfile",
+            "iam:RemoveRoleFromInstanceProfile",
+            "iam:ListInstanceProfiles"
           ],
           "Resource": "*"
         },
@@ -65,6 +77,17 @@
           "Condition": {
             "StringEquals": {
               "iam:PassedToService": "ecs-tasks.amazonaws.com"
+            }
+          }
+        },
+        {
+          "Sid": "IamPassRoleToEc2Only",
+          "Effect": "Allow",
+          "Action": "iam:PassRole",
+          "Resource": "*",
+          "Condition": {
+            "StringEquals": {
+              "iam:PassedToService": "ec2.amazonaws.com"
             }
           }
         }
