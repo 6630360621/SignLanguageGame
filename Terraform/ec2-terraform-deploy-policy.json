@@ -44,6 +44,15 @@
           "Resource": "*"
         },
         {
+          "Sid": "SecretsManagerReadForAmplifyToken",
+          "Effect": "Allow",
+          "Action": [
+            "secretsmanager:GetSecretValue",
+            "secretsmanager:DescribeSecret"
+          ],
+          "Resource": "*"
+        },
+        {
           "Sid": "IamMinimumForTerraformEcs",
           "Effect": "Allow",
           "Action": [

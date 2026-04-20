@@ -32,7 +32,15 @@ variable "amplify_instance_type" {
 }
 variable "amplify_access_token" {
   description = "GitHub personal access token for Amplify to access the repository"
+  type        = string
+  default     = null
   sensitive   = true
+}
+
+variable "amplify_access_token_secret_name" {
+  description = "Secrets Manager secret name or ARN containing the Amplify Git access token"
+  type        = string
+  default     = null
 }
 variable "amplify_branch_name" {
     description = "Git branch Amplify should deploy"
@@ -43,7 +51,7 @@ variable "amplify_branch_name" {
   variable "amplify_app_root" {
     description = "Monorepo path to the frontend app root"
     type        = string
-    default     = "Cloud-Sign-language/frontend"
+    default     = "frontend"
   }
 
 variable "frontend_existing_key_name" {

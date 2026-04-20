@@ -1,11 +1,22 @@
 locals {
   amplify_frontend_url = "https://${aws_amplify_branch.frontend.branch_name}.${aws_amplify_app.frontend.id}.amplifyapp.com"
+
+  amplify_access_token_effective = (
+    var.amplify_access_token != null && trimspace(var.amplify_access_token) != ""
+    ? var.amplify_access_token
+    : try(data.aws_secretsmanager_secret_version.amplify_access_token[0].secret_string, null)
+  )
+}
+
+data "aws_secretsmanager_secret_version" "amplify_access_token" {
+  count     = var.amplify_access_token_secret_name != null && trimspace(var.amplify_access_token_secret_name) != "" ? 1 : 0
+  secret_id = var.amplify_access_token_secret_name
 }
 
 resource "aws_amplify_app" "frontend" {
   name         = var.amplify_app_name
   repository   = var.amplify_repository
-  access_token = var.amplify_access_token
+  access_token = local.amplify_access_token_effective
   platform     = "WEB"
 
   build_spec = <<-YAML
