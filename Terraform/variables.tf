@@ -18,16 +18,8 @@ variable "amplify_app_name" {
   description = "AWS Amplify app name for the frontend"
   default     = "deaf-lingo-frontend"
 }
-variable "amplify_project_name" {
-  description = "Project name prefix for AWS resources"
-  type        = string
-}
 variable "amplify_repository" {
   description = "Git repository URL for Amplify hosting"
-  type        = string
-}
-variable "amplify_instance_type" {
-  description = "EC2 instance type for frontend hosting"
   type        = string
 }
 variable "amplify_access_token" {
@@ -53,18 +45,6 @@ variable "amplify_branch_name" {
     type        = string
     default     = "frontend"
   }
-
-variable "frontend_existing_key_name" {
-  description = "Existing EC2 key pair name for SSH. Leave empty to skip key pair attachment unless frontend_ssh_public_key is provided"
-  type        = bool
-  default     = false
-}
-
-variable "frontend_auto_deploy_on_boot" {
-  description = "Attempt an artifact deploy during EC2 boot"
-  type        = bool
-  default     = false
-}
 
 variable "cognito_user_pool_name" {
   description = "Cognito User Pool name"
