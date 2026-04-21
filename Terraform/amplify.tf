@@ -1,6 +1,6 @@
 locals {
   amplify_frontend_url = "https://${aws_amplify_branch.frontend.branch_name}.${aws_amplify_app.frontend.id}.amplifyapp.com"
-  alb_backend_url      = "http://${aws_lb.app.dns_name}"
+  api_backend_url      = aws_apigatewayv2_stage.backend.invoke_url
 
   amplify_access_token_effective = (
     var.amplify_access_token != null && trimspace(var.amplify_access_token) != ""
@@ -24,7 +24,7 @@ resource "aws_amplify_app" "frontend" {
     VITE_COGNITO_REGION = var.aws_region
     VITE_USER_POOL_ID    = aws_cognito_user_pool.frontend_users.id
     VITE_APP_CLIENT_ID   = aws_cognito_user_pool_client.frontend_app.id
-    VITE_API_BASE_URL    = local.alb_backend_url
+    VITE_API_BASE_URL    = local.api_backend_url
   }
 
   custom_rule {
