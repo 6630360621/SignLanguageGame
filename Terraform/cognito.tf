@@ -27,8 +27,8 @@ resource "aws_cognito_user_pool_client" "frontend_app" {
   allowed_oauth_scopes                 = ["email", "openid", "profile"]
   supported_identity_providers         = ["COGNITO"]
 
-  callback_urls = ["http://localhost:5173"]  # Update after Amplify deployment with: https://<branch>.<app-id>.amplifyapp.com
-  logout_urls   = ["http://localhost:5173"]  # Update after Amplify deployment
+  callback_urls = var.cognito_callback_urls
+  logout_urls   = var.cognito_logout_urls
 
   explicit_auth_flows = [
     "ALLOW_USER_PASSWORD_AUTH",

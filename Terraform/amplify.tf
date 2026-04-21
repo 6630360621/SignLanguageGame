@@ -19,27 +19,6 @@ resource "aws_amplify_app" "frontend" {
   access_token = local.amplify_access_token_effective
   platform     = "WEB"
 
-  build_spec = <<-YAML
-    version: 1
-    applications:
-      - appRoot: ${var.amplify_app_root}
-        frontend:
-          phases:
-            preBuild:
-              commands:
-                - npm ci
-            build:
-              commands:
-                - npm run build
-          artifacts:
-            baseDirectory: dist
-            files:
-              - '**/*'
-          cache:
-            paths:
-              - node_modules/**/*
-  YAML
-
   environment_variables = {
     VITE_COGNITO_REGION = var.aws_region
     VITE_USER_POOL_ID    = aws_cognito_user_pool.frontend_users.id
