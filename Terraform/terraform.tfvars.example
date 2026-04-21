@@ -19,3 +19,5 @@ amplify_instance_type = "t2.micro"
 # Cognito
 cognito_user_pool_name = "Cloud-Sign-Language-users"
 cognito_domain_prefix  = "cloud-sign-language-auth-unique-prefix"
+cognito_callback_urls  = ["http://localhost:5173"]
+cognito_logout_urls    = ["http://localhost:5173"]

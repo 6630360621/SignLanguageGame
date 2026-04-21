@@ -84,38 +84,6 @@ resource "aws_lb_listener" "http" {
   }
 }
 
-resource "aws_apigatewayv2_api" "backend" {
-  name          = "leaderboard-backend-http-api"
-  protocol_type = "HTTP"
-
-  cors_configuration {
-    allow_credentials = false
-    allow_headers     = ["*"]
-    allow_methods     = ["OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE"]
-    allow_origins     = [local.amplify_frontend_url, "http://localhost:5173"]
-  }
-}
-
-resource "aws_apigatewayv2_integration" "backend_proxy" {
-  api_id                 = aws_apigatewayv2_api.backend.id
-  integration_type       = "HTTP_PROXY"
-  integration_method     = "ANY"
-  payload_format_version = "1.0"
-  integration_uri        = "http://${aws_lb.app.dns_name}/{proxy}"
-}
-
-resource "aws_apigatewayv2_route" "backend_proxy" {
-  api_id    = aws_apigatewayv2_api.backend.id
-  route_key = "ANY /{proxy+}"
-  target    = "integrations/${aws_apigatewayv2_integration.backend_proxy.id}"
-}
-
-resource "aws_apigatewayv2_stage" "backend" {
-  api_id      = aws_apigatewayv2_api.backend.id
-  name        = "$default"
-  auto_deploy = true
-}
-
 # The "Server"
 resource "aws_ecs_cluster" "main" {
   name = "leaderboard-cluster"
