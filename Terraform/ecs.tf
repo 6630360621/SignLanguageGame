@@ -126,8 +126,8 @@ resource "aws_ecs_task_definition" "app_task" {
   family                   = "backend-task"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
-  cpu                      = "1024"
-  memory                   = "6144"
+  cpu                      = "512"
+  memory                   = "2048"
   execution_role_arn       = aws_iam_role.ecs_execution_role.arn
 
   container_definitions = jsonencode([
@@ -144,7 +144,11 @@ resource "aws_ecs_task_definition" "app_task" {
         { name = "DB_NAME", value = aws_db_instance.database.db_name },
         { name = "DB_USER", value = aws_db_instance.database.username },
         { name = "DB_PASSWORD", value = var.db_password },
-        { name = "DB_SSLMODE", value = "require" }
+        { name = "DB_SSLMODE", value = "require" },
+        { name = "COGNITO_REGION", value = var.aws_region },
+        { name = "USER_POOL_ID", value = aws_cognito_user_pool.frontend_users.id },
+        { name = "APP_CLIENT_ID", value = aws_cognito_user_pool_client.frontend_app.id },
+        { name = "ALLOW_MOCK_AUTH", value = "false" }
       ],
       logConfiguration = {
         logDriver = "awslogs"
