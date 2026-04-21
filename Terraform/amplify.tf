@@ -23,7 +23,7 @@ resource "aws_amplify_app" "frontend" {
     VITE_COGNITO_REGION = var.aws_region
     VITE_USER_POOL_ID    = aws_cognito_user_pool.frontend_users.id
     VITE_APP_CLIENT_ID   = aws_cognito_user_pool_client.frontend_app.id
-    VITE_API_BASE_URL    = "/api"
+    VITE_API_BASE_URL    = "https://${aws_lb.app.dns_name}"
   }
 
   custom_rule {

@@ -1,7 +1,7 @@
 resource "aws_cognito_user_pool" "frontend_users" {
   name = var.cognito_user_pool_name
 
-  username_attributes      = ["email"]
+  alias_attributes         = ["email"]
   auto_verified_attributes = ["email"]
 
   password_policy {

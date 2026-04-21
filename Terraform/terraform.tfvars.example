@@ -1,6 +1,7 @@
 # Copy this file to terraform.tfvars and set your real values.
 
 aws_region  = "us-east-1"
+alb_certificate_arn = "arn:aws:acm:us-east-1:123456789012:certificate/replace-with-your-cert-id"
 db_password = "ChangeMe123!"
 image_uri   = "the link"
 
