@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+torch
+torchvision
+transformers
+pillow
+opencv-python-headless
+numpy
+sqlalchemy
+psycopg2-binary
+python-jose
+python-dotenv
+requests
+awscli

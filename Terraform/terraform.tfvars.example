@@ -1,0 +1,26 @@
+# Copy this file to terraform.tfvars and set your real values.
+
+aws_region  = "us-east-1"
+db_password = "ChangeMe123!"
+image_uri   = "the link"
+
+amplify_project_name = "Cloud-Sign-Language"
+
+# Amplify frontend hosting
+amplify_app_name    = "Cloud-Sign-Language-frontend"
+amplify_repository  = "https://github.com/<your-org>/<your-repo>"
+
+# Recommended: store token in Secrets Manager and reference it here.
+amplify_access_token_secret_name = "Cloud-Sign-Language/amplify/github-token"
+amplify_branch_name = "main"
+amplify_app_root    = "frontend"
+amplify_instance_type = "t2.micro"
+
+# Cognito
+cognito_user_pool_name = "Cloud-Sign-Language-users"
+cognito_domain_prefix  = "cloud-sign-language-auth-unique-prefix"
+cognito_callback_urls  = ["http://localhost:5173"]
+cognito_logout_urls    = ["http://localhost:5173"]
+
+# API CORS allowlist (after first apply, copy frontend_url output here and apply again)
+api_cors_allowed_origins = ["http://localhost:5173"]

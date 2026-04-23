@@ -1,6 +1,6 @@
 output "api_endpoint" {
-  description = "Public API base URL through ALB"
-  value       = "http://${aws_lb.app.dns_name}"
+  description = "Public API base URL through API Gateway"
+  value       = aws_apigatewayv2_stage.backend.invoke_url
 }
 
 output "rds_endpoint" {

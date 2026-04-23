@@ -1,7 +1,7 @@
 resource "aws_cognito_user_pool" "frontend_users" {
   name = var.cognito_user_pool_name
 
-  username_attributes      = ["email"]
+  alias_attributes         = ["email"]
   auto_verified_attributes = ["email"]
 
   password_policy {
@@ -27,8 +27,8 @@ resource "aws_cognito_user_pool_client" "frontend_app" {
   allowed_oauth_scopes                 = ["email", "openid", "profile"]
   supported_identity_providers         = ["COGNITO"]
 
-  callback_urls = [local.amplify_frontend_url]
-  logout_urls   = [local.amplify_frontend_url]
+  callback_urls = var.cognito_callback_urls
+  logout_urls   = var.cognito_logout_urls
 
   explicit_auth_flows = [
     "ALLOW_USER_PASSWORD_AUTH",
@@ -38,6 +38,6 @@ resource "aws_cognito_user_pool_client" "frontend_app" {
 }
 
 resource "aws_cognito_user_pool_domain" "frontend_domain" {
-  domain       = var.cognito_domain_prefix
+  domain       = lower(var.cognito_domain_prefix)
   user_pool_id = aws_cognito_user_pool.frontend_users.id
 }

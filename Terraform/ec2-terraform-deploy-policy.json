@@ -44,15 +44,36 @@
           "Resource": "*"
         },
         {
+          "Sid": "ApiGatewayFullAccess",
+          "Effect": "Allow",
+          "Action": "apigateway:*",
+          "Resource": "*"
+        },
+        {
+          "Sid": "SecretsManagerReadForAmplifyToken",
+          "Effect": "Allow",
+          "Action": [
+            "secretsmanager:GetSecretValue",
+            "secretsmanager:DescribeSecret"
+          ],
+          "Resource": "*"
+        },
+        {
           "Sid": "IamMinimumForTerraformEcs",
           "Effect": "Allow",
           "Action": [
             "iam:CreateRole",
             "iam:DeleteRole",
             "iam:GetRole",
+            "iam:ListAttachedRolePolicies",
+            "iam:ListRolePolicies",
+            "iam:GetRolePolicy",
+            "iam:PutRolePolicy",
+            "iam:DeleteRolePolicy",
             "iam:AttachRolePolicy",
             "iam:DetachRolePolicy",
             "iam:CreateServiceLinkedRole",
+            "iam:ListInstanceProfilesForRole",
             "iam:ListRoles"
           ],
           "Resource": "*"
